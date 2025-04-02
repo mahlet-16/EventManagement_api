@@ -14,7 +14,7 @@ urlpatterns = [
     path('categories/', CategoryListAPIView.as_view(), name='category-list'),
     path('locations/', LocationListAPIView.as_view(), name='location-list'),
     
-    # User registration and login endpoints
+    # User registration and login endpoint
     path('user/register/', UserRegistrationAPIView.as_view(), name='user-register'),
     path('user/login/', CustomTokenObtainPairView.as_view(), name='login'),
 ]
