@@ -1,7 +1,10 @@
 from django.urls import path
+from .views import CustomTokenObtainPairView
+
 from .views import (
     EventListCreateAPIView, EventRetrieveUpdateDeleteAPIView,
-    RegisterForEventAPIView, CategoryListAPIView, LocationListAPIView
+    RegisterForEventAPIView, CategoryListAPIView, LocationListAPIView,
+    UserRegistrationAPIView, 
 )
 
 urlpatterns = [
@@ -10,4 +13,8 @@ urlpatterns = [
     path('register/', RegisterForEventAPIView.as_view(), name='register-event'),
     path('categories/', CategoryListAPIView.as_view(), name='category-list'),
     path('locations/', LocationListAPIView.as_view(), name='location-list'),
+    
+    # User registration and login endpoint
+    path('user/register/', UserRegistrationAPIView.as_view(), name='user-register'),
+    path('user/login/', CustomTokenObtainPairView.as_view(), name='login'),
 ]
