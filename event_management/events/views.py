@@ -3,7 +3,31 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Event, Registration, Category, Location
-from .serializers import EventSerializer, RegistrationSerializer, CategorySerializer, LocationSerializer
+from .serializers import EventSerializer, RegistrationSerializer, CategorySerializer, LocationSerializer, UserRegistrationSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.models import User
+import logging
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+# Custom Login View to only return access token
+class CustomTokenObtainPairView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        # We only return the access token, removing the refresh token from the response
+        return Response({'access': response.data['access']})
+
+
+# User Registration View
+class UserRegistrationAPIView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserRegistrationSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            'message': 'User created successfully'
+        })
 
 # CRUD for Events
 class EventListCreateAPIView(generics.ListCreateAPIView):
@@ -15,7 +39,11 @@ class EventListCreateAPIView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
 
     def perform_create(self, serializer):
-        serializer.save(organizer=self.request.user)
+        try:
+            serializer.save(organizer=self.request.user)
+        except Exception as e:
+            logging.error(f"Error while creating event: {e}")
+            raise
 
 class EventRetrieveUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()
