@@ -6,8 +6,19 @@ from .models import Event, Registration, Category, Location
 from .serializers import EventSerializer, RegistrationSerializer, CategorySerializer, LocationSerializer, UserRegistrationSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
+from django_filters import rest_framework as filters
+from rest_framework.filters import SearchFilter
 import logging
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+class EventFilter(filters.FilterSet):
+    title = filters.CharFilter(lookup_expr='icontains', label="Event Title")
+    location = filters.CharFilter(lookup_expr='icontains', label="Location")
+
+    class Meta:
+        model = Event
+        fields = ['title', 'location']
+
 # Custom Login View to only return access token
 class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
@@ -34,8 +45,8 @@ class EventListCreateAPIView(generics.ListCreateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['title', 'location__name', 'location']
+    filter_backends = [filters.DjangoFilterBackend] 
+    filterset_class = EventFilter  
     authentication_classes = [JWTAuthentication]
 
     def perform_create(self, serializer):
@@ -54,8 +65,9 @@ class EventRetrieveUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         event = self.get_object()
         if event.organizer != self.request.user:
-            return Response({"error": "You can only edit your own events."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({"detail": "You do not have permission to edit this event."}, status=status.HTTP_403_FORBIDDEN)
         serializer.save()
+
 
 # Event Registration
 class RegisterForEventAPIView(generics.CreateAPIView):
