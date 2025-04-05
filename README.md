@@ -1,8 +1,14 @@
 Event Management API
+
+
 Overview
+
+
 This is a Django-based API for managing events. It provides functionality for event creation, registration, user registration, event categories, locations, and authentication. The API supports JWT (JSON Web Token) authentication for secured access.
 
 Features
+
+
 User Registration: Register new users using a secure password.
 
 Event Management: Create, retrieve, update, and delete events.
@@ -35,6 +41,7 @@ django-filter
 djangorestframework-simplejwt
 
 API Endpoints
+
 1. User Registration
 URL: /api/user/register/
 
@@ -59,6 +66,7 @@ Copy
 Description: Allows users to register with a username, email, and password.
 
 2. User Login
+
 URL: /api/user/login/
 
 Method: POST
@@ -81,6 +89,7 @@ Copy
 Description: Authenticates the user and returns a JWT token for subsequent requests.
 
 3. Event Management
+
 List Events
 URL: /api/events/
 
@@ -168,6 +177,7 @@ Copy
 Description: Allows authenticated users to retrieve, update, or delete events they created.
 
 4. Event Registration
+
 URL: /api/register/
 
 Method: POST
@@ -189,6 +199,7 @@ Copy
 Description: Allows users to register for an event. It ensures the event doesn’t exceed its capacity.
 
 5. Category List
+
 URL: /api/categories/
 
 Method: GET
@@ -210,6 +221,7 @@ Copy
 Description: Retrieves a list of event categories.
 
 6. Location List
+
 URL: /api/locations/
 
 Method: GET
