@@ -35,7 +35,7 @@ class EventListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = EventSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['title', 'location__name', 'date_range']
+    filterset_fields = ['title', 'location__name', 'date_time']
     authentication_classes = [JWTAuthentication]
 
     def perform_create(self, serializer):
