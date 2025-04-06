@@ -11,7 +11,7 @@ Features
 
 User Registration: Register new users using a secure password.
 
-Event Management: Create, retrieve, update, and delete events.
+Event Management:Create, retrieve, update, and delete events.
 
 Event Registration: Users can register for events, ensuring that the event does not exceed its capacity.
 
@@ -22,6 +22,7 @@ JWT Authentication: Secure endpoints using JWT tokens.
 Event Filtering: Filter events by title, location, and category.
 
 Technologies Used
+
 Backend Framework: Django 5.x
 
 API Framework: Django REST Framework
@@ -50,7 +51,7 @@ Method: POST
 Request Body:
 
 json
-Copy
+
 {
     "username": "new_user",
     "email": "user@example.com",
@@ -59,7 +60,7 @@ Copy
 Response:
 
 json
-Copy
+
 {
     "message": "User created successfully"
 }
@@ -74,7 +75,7 @@ Method: POST
 Request Body:
 
 json
-Copy
+
 {
     "username": "new_user",
     "password": "password123"
@@ -82,7 +83,7 @@ Copy
 Response:
 
 json
-Copy
+
 {
     "access": "your_access_token_here"
 }
@@ -98,7 +99,7 @@ Method: GET
 Response:
 
 json
-Copy
+
 [
     {
         "id": 1,
@@ -120,9 +121,10 @@ Method: POST
 Request Body:
 
 json
-Copy
+
 {
     "title": "New Event",
+    "description": "new event",
     "location": 1,
     "date_time": "2025-04-20T09:00:00Z",
     "category": 1,
@@ -131,10 +133,11 @@ Copy
 Response:
 
 json
-Copy
+
 {
     "id": 1,
     "title": "New Event",
+    "description": "new event",
     "location": "Location Name",
     "date_time": "2025-04-20T09:00:00Z",
     "organizer": "username",
@@ -157,7 +160,7 @@ DELETE: Delete the event.
 Response for GET:
 
 json
-Copy
+
 {
     "id": 1,
     "title": "Event Title",
@@ -170,7 +173,7 @@ Copy
 Response for PUT:
 
 json
-Copy
+
 {
     "message": "Event updated successfully"
 }
@@ -185,14 +188,14 @@ Method: POST
 Request Body:
 
 json
-Copy
+
 {
     "event": 1
 }
 Response:
 
 json
-Copy
+
 {
     "message": "Successfully registered for the event."
 }
@@ -207,7 +210,7 @@ Method: GET
 Response:
 
 json
-Copy
+
 [
     {
         "id": 1,
@@ -229,7 +232,7 @@ Method: GET
 Response:
 
 json
-Copy
+
 [
     {
         "id": 1,
@@ -270,8 +273,8 @@ Clone the repository:
 
 bash
 Copy
-git clone https://github.com/yourusername/event-management-api.git
-cd event-management-api
+git clone https://github.com/mahlet-16/EventManagement_api.git
+cd EventManagement_api
 Install dependencies:
 
 bash
