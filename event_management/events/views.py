@@ -8,11 +8,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 import logging
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-# Custom Login View to only return access token
+
+# Custom Login View to return access token
+
 class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
-        # We only return the access token, removing the refresh token from the response
         return Response({'access': response.data['access']})
 
 
